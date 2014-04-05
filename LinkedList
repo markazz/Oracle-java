@@ -1,0 +1,293 @@
+
+public class Checker {
+
+    public static void main(String[] args) {
+
+    	System.out.println("Checker.java\n============\n");
+
+		/**
+		 * creating the variables used in the program
+		 */
+    	LinkedList list = new LinkedList();
+		String sentance = "the cat sat on the mat";
+		boolean equal = true;
+
+		// testing that the list is empty
+    	sop("- should be empty: ");
+    	sopln(list.getSentance().equals("") ? "working" : "NOT working");
+
+		// adding some data and testing that the data was added correctly
+		sop("- adding a sentance: ");
+		String[] pieces = sentance.split(" ");
+		for (int i=0 ; i<pieces.length ; i++)
+			list.insert(pieces[i]);
+		sopln(list.getSentance().equals("the cat sat on the mat") ? "working" : "NOT working");
+
+		// testing that the words of the sentance can be returned as an array
+		sop("- getting the individual words: ");
+		String[] test = list.getWords();
+		if (test.length!=pieces.length)
+			equal = false;
+		else
+			for (int i=0 ; i<pieces.length ; i++)
+				if (!pieces[i].equals(test[i])) {
+					equal = false;
+					break;
+				}
+		sopln(equal ? "working" : "NOT working");
+
+		// testing the sorting feature
+		sop("- sorting the individual words: ");
+		list.sort();
+		String[] sorted = list.getWords();
+		String[] compare = {"cat","mat","on","sat","the","the"};
+		equal = true;
+		if (sorted.length!=compare.length)
+			equal = false;
+		else
+			for (int i=0 ; i<sorted.length ; i++)
+				if (!sorted[i].equals(compare[i])) {
+					equal = false;
+					break;
+				}
+		sopln(equal ? "working" : "NOT working");
+    }
+
+	public static void sop(String s) {
+		System.out.print(s);
+	}
+
+	public static void sopln(String s) {
+		System.out.println(s);
+	}
+
+}// end class Checker
+
+
+
+
+
+
+
+
+
+
+
+	//====================================================================================
+		//====================================================================================
+
+public class LinkedList 
+{
+
+	private Node head = null;
+	private Node pointer = null;
+
+	
+	
+	//====================================================================================
+	
+	// constructor
+	public LinkedList() 
+	{}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	//====================================================================================
+	/**
+	 * Returns the nth Node in the LinkedList where the first item is position 0
+	 */
+	public Node getNode(int n) 
+	{
+		
+		
+		
+		
+		
+		// to be completed by student
+		return new Node();
+	}
+
+	
+	
+	
+	
+	
+	
+	//====================================================================================
+	/**
+	 * Implementation of the Bubble Sort algorithm
+	 */
+	public void sort() 
+	{
+		// to be completed by student
+	}
+
+	
+	
+	
+	
+	
+	//====================================================================================
+	/**
+	 * Return the data contained in the Nodes as a single spaced sentance of words
+	 * without a full spot or spaces at the start or the end of the String
+	 */
+	
+	public String getSentance() 
+	{
+	
+		
+		
+		
+		// to be completed by student
+		return "NOT IMPLEMENTED";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+
+	//====================================================================================
+	/**
+	 * Convert the LinkedList of Node to an array of strings
+	 * and returns it to the user.
+	 */
+	
+	public String[] getWords() 
+	{
+		
+		
+		
+		
+		// to be completed by student
+		return new String[0];
+	}
+
+	
+	
+	
+	
+	//====================================================================================
+	/*
+	 * Creates a new Node object that will contain the passed in data
+	 * and adds it to the end of the list.
+	 */
+	
+	public void insert(String s) 
+	{
+	
+		
+		
+		
+		// to be completed by student
+	}
+
+	
+	
+	
+	//====================================================================================
+	
+	public int getLength()
+	{
+		
+		
+		
+		// to be completed by student
+		return -1;
+	}
+
+	
+	
+	
+	
+	
+	
+	//====================================================================================
+	
+	public void display() 
+	{
+		if (head==null)
+			Checker.sopln("Empty");
+		else 
+		{
+			pointer = head;
+			Checker.sop(pointer.data+" - ");
+		
+			while (pointer.next!=null) 
+			{
+				pointer = pointer.next;
+			
+				if (pointer.next!=null)
+					Checker.sop(pointer.data+" - ");
+				else
+					Checker.sop(pointer.data);
+		 
+		}//while
+	}//else
+
+}// class end LinkedList
+
+
+
+
+
+
+
+//====================================================================================
+//====================================================================================
+
+
+class Node 
+{
+
+	Node next = null;
+	
+	String data = "";
+
+	
+	
+	//constructor
+	public Node()
+	{
+		
+	}
+
+	
+	
+	
+	
+	public Node(String s) 
+	{
+		data = s;
+	}
+
+	
+	
+	
+	
+	public boolean equals(Node n) 
+	{
+		return n.data.equals(data) ? true : false;
+	}
+
+	
+	
+	
+	
+	public String toString() 
+	{
+		return "["+data+"]";
+	}
+
+}
+}// end of class Node
