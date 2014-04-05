@@ -1,0 +1,258 @@
+
+public class IndirectSorting {
+
+	Student[] students = null;
+	
+	
+	/**
+	 * This method will return an integer array containing the indexes of the 
+	 * top scoring students in the subject determined by the value passed in
+	 *   
+	 * @param String subject
+	 * @return int[]
+	 */
+	public int[] getTopTenBySubject(String s) {
+		// to be completed by the student
+		return new int[0];
+	}
+	
+	
+	/**
+	 * This method will return an integer array containing the indexes of the students
+	 * studying the subject determined by the passed in value. It will be further filtered 
+	 * by the name of the student which is also passed in to the method.
+	 *  
+	 * @param String subject
+	 * @param String name
+	 * @return int[]
+	 */
+	public int[] getStudentsByName(String s, String n) {		
+		// to be completed by the student
+		return new int[0];
+	}
+		
+	
+	/**
+	 * Given the subject and upper and lower limits of the range in grades
+	 * return a integer array that contains the students indexes.
+	 * The matches of grades is inclusive of the limits.
+	 * 
+	 * @param String subject
+	 * @param int lower
+	 * @param int upper
+	 * @return int[]
+	 */
+	public int[] getStudentsByResultsRange(String sub, int lower, int upper) {
+		// to be completed by the student
+		return new int[0];
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//  No Code needs to be edited below this line ======================================================================
+	
+	IndirectSorting() {
+		DataManager.generateData();
+		students = DataManager.loadData();
+		System.out.println("IndirectSorting.java\n====================\n\n");
+		displayResults(getTopTenBySubject("MATHS"), "Top 10 in 'MATHS'");
+		displayResults(getStudentsByName("FRENCH","Jude"), "All students named 'Jude' in 'FRENCH'");
+		displayResults(getStudentsByResultsRange("JAVA",40,60), "All students who scored between 40 and 60 inclusive in 'JAVA'");
+	}
+	
+	private void displayResults(int[] res, String label) {
+		System.out.println(">> "+label+"\n");
+		System.out.println("ID        Name      Subject   Grade\n===================================");
+		for (int i=0; i<res.length; i++) 
+			System.out.println(addPadding(students[res[i]].id,10)+addPadding(students[res[i]].name,10)+addPadding(students[res[i]].subject,10)+addPaddingRight(students[res[i]].grade,5));			
+		System.out.println("\n");
+	}
+	
+	
+	private String addPadding(String ip, int len) {
+		while (ip.length()<len)
+			ip = ip+" ";
+		return ip;
+	}
+	
+	private String addPadding(int i, int len) {
+		String ip = i+"";
+		while (ip.length()<len)
+			ip = ip+" ";
+		return ip;
+	}
+	
+	private String addPaddingRight(int i, int len) {
+		String ip = i+"";
+		while (ip.length()<len)
+			ip = " "+ip;
+		return ip;
+	}
+	
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		new IndirectSorting();
+	}
+}
+
+
+
+//========================================================================================
+//========================================================================================
+
+
+
+
+import java.util.*;
+import java.io.*;
+
+public class DataManager {
+
+	static Student[] stu = new Student[200];
+	
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		generateData();
+		loadData();
+	}
+	
+	/**
+	 * Create a file called 'students.data' that will store the details of a selection of students
+	 * The data is stored in comma separated format and each row represents a different student
+	 * The file will be saved in the default location i.e. the project root folder in Eclipse.
+	 * If the file has previously been generated it will not be over written but instead simply 
+	 * loaded from disk. 
+	 */
+	public static void generateData() {
+		try {
+			File data = new File("students.data");
+			if (!data.exists()) {				
+				Random gene = new Random();
+				
+				for (int i = 0; i < stu.length; i++) 
+					stu[i] = new Student(284000+i,getName(i), getSubject(i),gene.nextInt(100));
+			
+	    		FileWriter fw = new FileWriter("students.data",false);
+	    		for (int i = 0; i < stu.length; i++) 	    			
+	    			fw.write(stu[i].toCSV());
+	    		fw.close();
+			}
+		}
+		catch(Exception e) {
+			System.out.println("ERROR : "+e);
+		}
+	}
+
+	/**
+	 * Manages the extraction of the student data from the file
+	 * and the conversion to a Student object. The student details 
+	 * are then returned in an array
+	 * @return student[]
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static Student[] loadData() {
+		try {    		
+			String line = "";			
+			Vector vs = new Vector();
+			File fi = new File("students.data");
+    		FileReader fr = new FileReader(fi);
+    		BufferedReader br = new BufferedReader(fr);
+    		while ((line = br.readLine()) != null) 
+    	         vs.add(new Student(line));
+    		br.close();
+    		stu = new Student[vs.size()];
+    		for (int i=0 ; i<vs.size() ; i++) 
+				stu[i] = (Student)vs.elementAt(i);
+    		return stu;
+		}
+		catch(Exception e) {
+			System.out.println("ERROR : "+e);
+			return new Student[0];
+		}
+	}
+	
+	/**
+	 * Used to help randomize the data generation
+	 * @param i
+	 * @return String name of the student
+	 */
+	private static String getName(int i) {
+    	String[] names = {"John", "Joe", "Jim", "Jake", "Josh", "Jerry", "Jude", "Jay", "Jason", "Jan", "Jean", "Jacob", "Jackson", "Jacques", "James", "Jamal", "Julian", "Jarek", "Jared", "Jarell"};
+    	return names[i%names.length];
+	}
+	
+	/**
+	 * Used to randomize the subject that a student studies
+	 * @param i
+	 * @return String the name of the subject
+	 */
+	private static String getSubject(int i) {
+    	String[] subjects = {"MATHS", "ENGLISH", "FRENCH", "HISTORY", "GERMAN", "JAVA"};
+    	return subjects[i%subjects.length];
+	}	
+}
+
+/**
+ * Simple object representing a Student * 
+ */
+class Student {
+	int id = 0;
+	String name = "";
+	String subject = "";
+	int grade = 0;
+	
+	Student(int i, String n, String s, int g) {
+		id = i;
+		name = n;
+		subject = s;
+		grade = g;
+	}
+	
+	Student(String r) {
+		String[] pieces = r.split(",");
+		id = Integer.parseInt(pieces[0]);
+		name = pieces[1];
+		subject = pieces[2];
+		grade = Integer.parseInt(pieces[3]);
+	}
+	
+	/**
+	 * Needed for the serialisation of the object data for easy storage in a flat file
+	 * @return
+	 */
+	String toCSV() {
+		return id+","+name+","+subject+","+grade+"\n";
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
